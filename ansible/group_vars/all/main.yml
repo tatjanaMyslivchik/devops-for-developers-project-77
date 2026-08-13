@@ -1,0 +1,5 @@
+docker_image: "tatjanamyslivchik/devops-for-developers-project-74:latest"
+
+pip_install_packages:
+  - docker
+  - docker-compose

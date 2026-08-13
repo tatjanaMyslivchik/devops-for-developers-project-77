@@ -1,0 +1,80 @@
+- name: Deploy application
+  hosts: webservers
+  become: yes
+
+  roles:
+    - geerlingguy.docker
+    - datadog.datadog
+
+  tasks:
+    - name: Update apt cache and upgrade system
+      apt:
+        update_cache: yes
+        upgrade: dist
+        cache_valid_time: 3600
+      tags:
+        - always
+
+    - name: Install pip without version pinning
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      tags:
+        - pip
+
+    - name: Install Docker and Docker Compose via pip
+      pip:
+        name: "{{ pip_install_packages }}"
+        state: present
+      tags:
+        - docker
+
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Start docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Create app directory
+      file:
+        path: /home/ubuntu/app
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+
+    - name: Create .env file from template
+      template:
+        src: templates/.env.j2
+        dest: /home/ubuntu/app/.env
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Stop and remove old container
+      docker_container:
+        name: app
+        state: absent
+      ignore_errors: yes
+
+    - name: Run application container
+      docker_container:
+        name: app
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "8080:8080"
+        env_file: /home/ubuntu/app/.env
+      tags:
+        - deploy
