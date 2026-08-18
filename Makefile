@@ -3,13 +3,13 @@ tf-init:
 	$(MAKE) -C terraform init
 
 tf-plan:
-	$(MAKE) -C terraform plan -var-file=terraform.tfvars
+	$(MAKE) -C terraform plan
 
 tf-apply:
-	$(MAKE) -C terraform apply -var-file=terraform.tfvars
+	$(MAKE) -C terraform apply
 
 tf-destroy:
-	$(MAKE) -C terraform destroy -var-file=terraform.tfvars
+	$(MAKE) -C terraform destroy
 
 # Ansible
 ansible-deps:
@@ -17,3 +17,7 @@ ansible-deps:
 
 ansible-deploy:
 	$(MAKE) -C ansible deploy
+
+# DNS
+update-dns:
+	$(MAKE) -C terraform update-dns

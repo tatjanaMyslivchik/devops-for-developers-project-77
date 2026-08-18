@@ -83,3 +83,13 @@ variable "db_version" {
   description = "PostgreSQL version"
   default     = 16
 }
+
+variable "db_name" {
+  description = "Database name"
+  default     = "blog_db"
+}
+
+variable "db_user" {
+  description = "Database user"
+  default     = "blog_user"
+}
