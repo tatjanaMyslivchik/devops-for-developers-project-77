@@ -1,6 +1,6 @@
 # Terraform
 tf-init:
-	$(MAKE) -C terraform init -backend=false -get-plugins=false
+	$(MAKE) -C terraform init
 
 tf-plan:
 	$(MAKE) -C terraform plan
