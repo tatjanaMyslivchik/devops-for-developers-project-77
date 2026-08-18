@@ -1,22 +1,23 @@
 # Terraform
 tf-init:
-	cd terraform && terraform init
+	$(MAKE) -C terraform init -backend=false -get-plugins=false
 
 tf-plan:
-	cd terraform && terraform plan -var-file=terraform.tfvars
+	$(MAKE) -C terraform plan
 
 tf-apply:
-	cd terraform && terraform apply -var-file=terraform.tfvars
+	$(MAKE) -C terraform apply
 
 tf-destroy:
-	cd terraform && terraform destroy -var-file=terraform.tfvars
+	$(MAKE) -C terraform destroy
 
 # Ansible
 ansible-deps:
-	cd ansible && ansible-galaxy install -r requirements.yml
+	$(MAKE) -C ansible galaxy-install
 
 ansible-deploy:
-	cd ansible && ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass	
+	$(MAKE) -C ansible deploy
 
-update-dns: 
-	terraform -chdir=terraform apply -target=yandex_dns_recordset.blog -target=yandex_dns_recordset.blog_www
+# DNS
+update-dns:
+	$(MAKE) -C terraform update-dns
