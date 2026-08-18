@@ -41,3 +41,45 @@ variable "datadog_api_url" {
   description = "Региональный API URL Datadog (.eu для Европы, .com для США)"
   default     = "https://datadoghq.eu"
 }
+
+variable "instance_count" {
+  description = "Number of instances"
+  default     = 2
+}
+
+# Параметры ВМ
+variable "instance_cores" {
+  description = "Number of CPU cores for instances"
+  default     = 2
+}
+
+variable "instance_memory" {
+  description = "Memory (GB) for instances"
+  default     = 2
+}
+
+variable "instance_disk_size" {
+  description = "Disk size (GB) for instances"
+  default     = 20
+}
+
+# Параметры PostgreSQL
+variable "db_resource_preset" {
+  description = "Resource preset for PostgreSQL cluster"
+  default     = "b2.medium"
+}
+
+variable "db_disk_size" {
+  description = "Disk size (GB) for PostgreSQL"
+  default     = 10
+}
+
+variable "db_disk_type" {
+  description = "Disk type for PostgreSQL"
+  default     = "network-ssd"
+}
+
+variable "db_version" {
+  description = "PostgreSQL version"
+  default     = 16
+}

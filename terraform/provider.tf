@@ -25,3 +25,7 @@ provider "datadog" {
   app_key = var.datadog_app_key
   api_url  = var.datadog_api_url
 }
+
+provider "ansible-vault" {
+  secret_file = "../ansible/group_vars/all/vault.yml"
+}
