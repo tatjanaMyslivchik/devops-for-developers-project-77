@@ -1,3 +1,7 @@
+# Генерация terraform.tfvars из vault.yml
+tfvars:
+	./scripts/generate-tfvars.sh
+
 # Terraform
 tf-init:
 	$(MAKE) -C terraform init
@@ -21,3 +25,11 @@ ansible-deploy:
 # DNS
 update-dns:
 	$(MAKE) -C terraform update-dns
+
+setup: tfvars
+	$(MAKE) -C terraform init
+	$(MAKE) -C ansible galaxy-install
+
+test:
+	$(MAKE) -C terraform validate
+	$(MAKE) -C ansible syntax-check

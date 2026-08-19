@@ -10,10 +10,14 @@ terraform {
       version = "~> 3.0"
     }
 
-    ansible-vault = {
-      source  = "sjourdan/ansible-vault"
-      version = "~> 1.0"
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.0"
     }
+    # ansible-vault = {
+    #   source  = "sjourdan/ansible-vault"
+    #   version = "~> 1.0"
+    # }
   }
 }
 
@@ -28,8 +32,4 @@ provider "datadog" {
   api_key = var.datadog_api_key
   app_key = var.datadog_app_key
   api_url  = var.datadog_api_url
-}
-
-provider "ansible-vault" {
-  secret_file = "../ansible/group_vars/all/vault.yml"
 }

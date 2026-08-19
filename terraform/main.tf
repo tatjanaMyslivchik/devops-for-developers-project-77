@@ -19,11 +19,6 @@ data "yandex_cm_certificate" "blog" {
   name = "blog-certificate"
 }
 
-data "ansible_vault" "db_password" {
-  vault_file = "../ansible/group_vars/all/vault.yml"
-  key        = "db_password"
-}
-
 # Группа безопасности для балансировщика
 resource "yandex_vpc_security_group" "alb" {
   name        = "alb-sg"
@@ -141,7 +136,7 @@ resource "yandex_mdb_postgresql_database" "blog" {
 resource "yandex_mdb_postgresql_user" "blog" {
   cluster_id = yandex_mdb_postgresql_cluster.blog.id
   name       = var.db_user
-  password   = data.ansible_vault.db_password.value
+  password   = var.db_password
 }
 
 # Целевая группа
