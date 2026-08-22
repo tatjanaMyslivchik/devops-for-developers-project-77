@@ -120,7 +120,7 @@ resource "yandex_mdb_postgresql_cluster" "blog" {
   }
 
   host {
-    zone      = var.yc_zone
+    zone      = "ru-central1-a"
     subnet_id = data.yandex_vpc_subnet.blog.id
   }
 }
@@ -245,5 +245,5 @@ resource "local_file" "ansible_vars" {
     db_name = var.db_name
     db_user = var.db_user
   })
-  filename = "../ansible/group_vars/all/main.yml"
+  filename = "../ansible/group_vars/all/terraform.yml"
 }

@@ -12,19 +12,28 @@
 
 ### Настройка переменных
 
-Необходимо создать файл `terraform/terraform.tfvars`:
+### Автоматическая генерация `terraform.tfvars`
 
-```hcl
-yc_token     = "вOAuth_токен"
-yc_cloud_id  = "cloud_id"
-yc_folder_id = "folder_id"
-yc_zone      = "zone"
-db_password  = "пароль БД"
-datadog_api_key = "Datadog API key"
-datadog_app_key = "Datadog APP key"
+Для удобства используется скрипт `scripts/generate-tfvars.sh`, который:
+
+- Расшифровывает `ansible/group_vars/all/vault.yml`
+- Извлекает переменные с префиксом `terraform_`
+- Генерирует файл `terraform/terraform.tfvars`
+
+```bash
+# Запуск генерации
+make tfvars
+
+# Или напрямую
+./scripts/generate-tfvars.sh
 ```
 
-Необходимо создать файл с секретами `ansible/group_vars/all/vault.yml`
+Необходимо создать файл с секретами `ansible/group_vars/all/vault.yml`, в котором олжны быть переменные с префиксом terraform_:
+```terraform_yc_token: "токен"
+terraform_yc_cloud_id: "cloud_id"
+terraform_yc_folder_id: "folder_id"
+terraform_db_password: "пароль"
+```
 
 Необходимо 'кспортировать `AWS_ACCESS_KEY_ID` и `AWS_SECRET_ACCESS_KEY`
 

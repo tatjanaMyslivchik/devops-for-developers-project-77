@@ -22,6 +22,15 @@ ansible-deps:
 ansible-deploy:
 	$(MAKE) -C ansible deploy
 
+ansible-setup:
+	$(MAKE) -C ansible setup
+
+ansible-app:
+	$(MAKE) -C ansible deploy-app
+
+ansible-monitoring:
+	$(MAKE) -C ansible monitoring
+
 # DNS
 update-dns:
 	$(MAKE) -C terraform update-dns
